@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="web2excel:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="web2excel.war">
+      <element id="artifact" artifact-name="web2excel:war exploded" />
+    </root>
+  </artifact>
+</component>
