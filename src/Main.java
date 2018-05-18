@@ -1,128 +1,166 @@
-/*import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;*/
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Main /*extends HttpServlet*/{
-/*
-        private static final String htmlData = "<html><head><title>Jsoup html parse table</title></head><body><table class=\"tableData\" border=\"0\"><tr>"
-                + "<th>Sr.No.</th><th>Studenth>City</th><th>Phone No</th></tr><tr><td>1</td><td>Dixit</td>"
-                + "<td>Ahmedabad</td><td>9825098025</td></tr><tr><td>1</td><td>Saharsh</td><td>Ahmedabad</td><td>9825098015</td></tr></table>"
-                + "</body></html>";
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
-        Date now = new Date();
-        String currDate = new SimpleDateFormat("dd_MM_yyyy_HH_mm").format(now);
-        String fileName = "sampleExcel" + currDate;
+    public static final String ENCODING = "UTF-8";
+    public static final String OUT_PATH = "imgs\\";
 
-        // Create book
-        HSSFWorkbook wb = new HSSFWorkbook();
 
-        // create excel sheet for page 1
-        HSSFSheet sheet = wb.createSheet();
+    public static String getHTMLData(String url) throws IOException, FileNotFoundException {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(url), ENCODING))) {
+            StringBuilder sb = new StringBuilder();
+            String str = "";
+            while ((str = in.readLine()) != null) {
+                sb.append(str + "\n");
+            }
+        return sb.toString();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        parseHTML(getHTMLData("test.html"));
+    }
+
+    public static void  parseHTML(String html) throws IOException {
+        Workbook wb = new XSSFWorkbook();
+
+        Sheet sheet = wb.createSheet();
 
         //Set Header Font
-        HSSFFont headerFont = wb.createFont();
-        headerFont.setBoldweight(headerFont.BOLDWEIGHT_BOLD);
+        Font headerFont = wb.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontName("Calibri");
         headerFont.setFontHeightInPoints((short) 12);
+
+        //Common Cell Font
+        Font commonFont = wb.createFont();
+        commonFont.setFontName("Calibri");
+        commonFont.setFontHeightInPoints((short) 12);
 
         //Set Header Style
         CellStyle headerStyle = wb.createCellStyle();
         headerStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
-        headerStyle.setAlignment(headerStyle.ALIGN_CENTER);
+        headerStyle.setAlignment(HorizontalAlignment.CENTER);
+        headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         headerStyle.setFont(headerFont);
-        headerStyle.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);
-        headerStyle.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
+        headerStyle.setBorderTop(BorderStyle.MEDIUM);
+        headerStyle.setBorderBottom(BorderStyle.MEDIUM);
+
+        //Set Common SellStyle
+        CellStyle commonCellStyle = wb.createCellStyle();
+        commonCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        commonCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        commonCellStyle.setFont(commonFont);
+
         int rowCount = 0;
         Row header;
-
-        */
-/*
-            Following code parse html table
-        *//*
-
-        Document doc = Jsoup.parse(htmlData);
-
-        */
-/* Display list of headers for
-        tag here i tried to fetch data with class = tableData in table tag
-        you can fetch using id or other attribute
-        rowCount variable to create row for excel sheet
-        *//*
-
         Cell cell;
-        for (Element table : doc.select("table[class=tableData]")) {
+
+        Document doc = Jsoup.parse(html);
+        for (Element table : doc.select("table[id=testTable]")) {
             rowCount++;
-            // loop through all tr of table
             for (Element row : table.select("tr")) {
-                // create row for each tag
                 header = sheet.createRow(rowCount);
-                // loop through all tag of tag
                 Elements ths = row.select("th");
                 int count = 0;
+                //Loop through Headers
                 for (Element element : ths) {
                     // set header style
                     cell = header.createCell(count);
-                    cell.setCellValue(element.text());
+                    cell.setCellValue(element.text().toUpperCase());
                     cell.setCellStyle(headerStyle);
+                    cell.getRow().setHeightInPoints((char) 24);
                     count++;
                 }
                 // now loop through all td tag
                 Elements tds = row.select("td:not([rowspan])");
                 count = 0;
-                for (Element element : tds) {
-                    // create cell for each tag
+                for (Element elementRow : tds) {
+                    if (elementRow.childNodeSize() > 0) {
+                    Node img = elementRow.selectFirst("img");
+                        if (img != null) {
+                            String imgPath = img.attr("src");
+                            saveToFile(imgPath, getImgName(imgPath) );
+//                        System.out.println("img > " + img.attr("src"));
+                        }
+                    }
+
+                // create cell for each tag
                     cell = header.createCell(count);
-                    cell.setCellValue(element.text());
+                    cell.getRow().setHeightInPoints(100);
+                    cell.setCellStyle(commonCellStyle);
+                    cell.setCellValue(elementRow.text());
                     count++;
+
+
                 }
                 rowCount++;
+
                 // set auto size column for excel sheet
                 sheet = wb.getSheetAt(0);
                 for (int j = 0; j < row.select("th").size(); j++) {
                     sheet.autoSizeColumn(j);
                 }
+
             }
         }
-        ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-        wb.write(outByteStream);
-        byte[] outArray = outByteStream.toByteArray();
 
-        response.setContentType("application/ms-excel");
-        response.setContentLength(outArray.length);
-        response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xls");
-        OutputStream outStream = response.getOutputStream();
-        outStream.write(outArray);
-        outStream.flush();
-        outStream.close();
-//        fos.flush();
-//        fos.close();
-//        outputStream.flush();
+        TryDifferent.writeExcel(wb, "trying");
+
     }
 
-    public HttpServletResponse createExcel(HttpServletResponse response) throws IOException {
-        return null;
+    public static String getImgName(String url) {
+        String name = url.replace("./test_files/", "");
+        name = name.replace(" ", "_");
+        return name;
     }
-*/
+
+    public static void saveToFile(String in, String out) throws IOException {
+        try (InputStream is = new FileInputStream(in); OutputStream os = new FileOutputStream(out)) {
+            byte[] b = new byte[2048];
+            int length;
+
+            while ((length = is.read(b)) != -1) {
+                os.write(b, 0, length);
+            }
+            System.out.println("saved: " + out);
+        }
+    }
+
+    public static void saveImgFromUrl(String in, String out) throws IOException {
+        URL url = new URL(in);
+            try (InputStream is = url.openStream(); OutputStream os = new FileOutputStream(out)) {
+                byte[] b = new byte[2048];
+                int length;
+
+                while ((length = is.read(b)) != -1) {
+                    os.write(b, 0, length);
+                }
+                System.out.println("saved: " + out);
+            }
+    }
+
+    private static void print(String msg, Object... args) {
+        System.out.println(String.format(msg, args));
+    }
+
+    private static String trim(String s, int width) {
+        if (s.length() > width)
+            return s.substring(0, width-1) + ".";
+        else
+            return s;
+    }
+
+
 
 }
