@@ -1,0 +1,2980 @@
+var my_object = {
+  Fabric: {
+    category: [1, 1.15, 1.35, 1.6, 1.9],
+    1: ['fabric 11', 'fabric 12', 'fabric 13', 'fabric 14', 'fabric 15', 'fabric 16', 'fabric 17'],
+    2: ['fabric 21', 'fabric 22', 'fabric 23', 'fabric 24'],
+    3: ['fabric 31', 'fabric 32', 'fabric 33', 'fabric 34', 'fabric 35', 'fabric 36'],
+    4: ['fabric 41', 'fabric 42', 'fabric 43', 'fabric 44', 'fabric 45', 'fabric 46', 'fabric 47', 'fabric 48'],
+    5: ['fabric 51', 'fabric 52', 'fabric 53'],
+  },
+  Leather: {
+    category: [1, 1.15, 1.25, 1.35],
+    1: ['leather 11', 'leather 12', 'leather 13', 'leather 14', 'leather 15', 'leather 16', 'leather 17'],
+    2: ['leather 21', 'leather 22', 'leather 23', 'leather 24'],
+    3: ['leather 31', 'leather 32', 'leather 33', 'leather 34', 'leather 35', 'leather 36'],
+    4: ['leather 41', 'leather 42', 'leather 43', 'leather 44', 'leather 45', 'leather 46', 'leather 47', 'leather 48'],
+  },
+  Suede: {
+    category: [1, 1.17, 1.27],
+    1: ['suede 18', 'suede 19', 'suede 20', 'suede 21', 'suede 22', 'suede 23', 'suede 24', 'suede 25'],
+    2: ['suede 21', 'suede 22', 'suede 23', 'suede 24'],
+    3: ['suede 31', 'suede 32', 'suede 33', 'suede 34', 'suede 35', 'suede 36'],
+  },
+  Wood:{
+    Fabric: [1, 1, 1, 1, 1],
+    Leather: [1, 1.15, 1.25, 1.35, 1.45],
+    Suede: [1, 1.17, 1.27, 1.37, 1.47],
+    Names: ['Java','Anthracite','Chestnut','Ivory','RAL'],
+    Wood_images: ['img/Java.jpg','img/Anthracite.jpg','img/Chestnut.jpg','img/Ivory.jpg','img/RAL.jpg']
+  }
+};
+
+var fields = {
+    check: 0,
+    photo: 1,
+    name: 2,
+    upholstery: 3,
+    category: 4,
+    name_of_material: 5,
+    finishes: 6,
+    price_start: 7,
+    price_of_one_item: 8,
+    discount: 9,
+    amount: 10,
+    total_price: 11,
+    delivery: 12,
+    fabric_price: 13,
+    leather_price: 14,
+    suede_price: 15
+}
+
+var fields_length = 0;
+
+var all_rows = 0; // общее количество строк в таблице
+var wrapping = 80; //+80мм с каждой стороны на просчет объема и упаковку при транспортировке
+
+var fluffy = [
+  //CHAIRS
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/flora chair.jpg',
+    name: 'FLORA CHAIR 0911.01',
+    price_fabric: 700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 740,
+    width: 770,
+    depth: 660,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/anri chair.jpg',
+    name: 'ANRI CHAIR 0911.02',
+    price_fabric: 750,
+    price_leather: 0,
+    price_suede: 0,
+    height: 935,
+    width: 530,
+    depth: 680,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/aurora armchair.jpg',
+    name: 'AURORA ARMCHAIR 0911.04',
+    price_fabric: 550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 850,
+    width: 540,
+    depth: 642,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/aurora chair.jpg',
+    name: 'AURORA CHAIR 0911.05',
+    price_fabric: 550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 850,
+    width: 540,
+    depth: 642,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/aurora armchair 2.jpg',
+    name: 'AURORA ARMCHAIR 2 0911.12',
+    price_fabric: 630,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1070,
+    width: 550,
+    depth: 680,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/aurora chair 2.jpg',
+    name: 'AURORA CHAIR 2 0911.11',
+    price_fabric: 630,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1070,
+    width: 490,
+    depth: 680,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/aurora bar chair.jpg',
+    name: 'AURORA BAR CHAIR 0911.03',
+    price_fabric: 660,
+    price_leather: 0,
+    price_suede: 0,
+    height: 850,
+    width: 450,
+    depth: 460,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/fan bar chair.jpg',
+    name: 'FAN BAR CHAIR 0911.10',
+    price_fabric: 680,
+    price_leather: 0,
+    price_suede: 0,
+    height: 960,
+    width: 500,
+    depth: 525,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/moon armchair.jpg',
+    name: 'MOON ARMCHAIR 0911.06',
+    price_fabric: 790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 940,
+    width: 650,
+    depth: 660,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/lucky chair.jpg',
+    name: 'LUCKY CHAIR 0911.07',
+    price_fabric: 840,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/fan chair.jpg',
+    name: 'FAN CHAIR 0911.08',
+    price_fabric: 690,
+    price_leather: 0,
+    price_suede: 0,
+    height: 890,
+    width: 600,
+    depth: 630,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chairs',
+    img: 'http://shepelcollection.com/img/1 chairs/fan armchair.jpg',
+    name: 'FAN ARMCHAIR 0911.09',
+    price_fabric: 690,
+    price_leather: 0,
+    price_suede: 0,
+    height: 890,
+    width: 600,
+    depth: 630,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //LOUNGE CHAIRS
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/fan lounge chair.jpg',
+    name: 'FAN LOUNGE CHAIR 2603.01',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 900,
+    depth: 910,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/anri lounge chair.jpg',
+    name: 'ANRI LOUNGE CHAIR 2603.02',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 900,
+    depth: 910,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/billy lounge chair.jpg',
+    name: 'BILLY LOUNGE CHAIR 2603.03',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 720,
+    width: 850,
+    depth: 790,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/mary lounge chair.jpg',
+    name: 'MARY LOUNGE CHAIR 2603.04',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 825,
+    width: 905,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/eddy lounge chair.jpg',
+    name: 'EDDY LOUNGE CHAIR 2603.06',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 1040,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/moon lounge chair.jpg',
+    name: 'MOON LOUNGE CHAIR 2603.05',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 835,
+    width: 810,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/gravity lounge chair.jpg',
+    name: 'GRAVITY LOUNGE CHAIR 2603.10',
+    price_fabric: 1755,
+    price_leather: 0,
+    price_suede: 0,
+    height: 755,
+    width: 750,
+    depth: 920,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'lounge_chairs',
+    img: 'http://shepelcollection.com/img/1 lounge chair/natalie lounge chair.jpg',
+    name: 'NATALIE LOUNGE CHAIR 2603.09',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 900,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //SOFAS
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/tanya sofa 2900.jpg',
+    name: 'TANYA SOFA 1910.03S',
+    price_fabric: 4200,
+    price_leather: 0,
+    price_suede: 0,
+    height: 770,
+    width: 2900,
+    depth: 940,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/anri sofa 1700.jpg',
+    name: 'ANRI SOFA 170 1910.04S',
+    price_fabric: 1850,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 1700,
+    depth: 910,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/fan sofa 1700.jpg',
+    name: 'FAN SOFA 170 1910.01S',
+    price_fabric: 1850,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 1700,
+    depth: 910,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/billy sofa 1700.jpg',
+    name: 'BILLY SOFA 170 1910.02S',
+    price_fabric: 1850,
+    price_leather: 0,
+    price_suede: 0,
+    height: 720,
+    width: 1700,
+    depth: 790,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/moon sofa 1700.jpg',
+    name: 'MOON SOFA 170 1910.06S',
+    price_fabric: 2100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 835,
+    width: 1700,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/moon sofa 2200.jpg',
+    name: 'MOON SOFA 220 1910.07S',
+    price_fabric: 2700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 835,
+    width: 2200,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy sofa 1600.jpg',
+    name: 'EDDY SOFA 160 1910.10S',
+    price_fabric: 2100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 1600,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy sofa 2200.jpg',
+    name: 'EDDY SOFA 220 1910.11S',
+    price_fabric: 2700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 2200,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy sectional sofa 2700.jpg',
+    name: 'EDDY SECTIONAL SOFA 270 1910.12S',
+    price_fabric: 2300,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 2680,
+    depth: 1150,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy sectional sofa 3550.jpg',
+    name: 'EDDY SECTIONAL SOFA 355 1910.13S',
+    price_fabric: 3050,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 3550,
+    depth: 1350,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy center sectional.jpg',
+    name: 'EDDY CENTER SECTIONAL 1910.14S',
+    price_fabric: 750,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 1055,
+    depth: 980,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy left section.jpg',
+    name: 'EDDY LEFT SECTION 1910.15S',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 980,
+    depth: 1380,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/eddy right section.jpg',
+    name: 'EDDY RIGHT SECTION 1910.16S',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 980,
+    depth: 1380,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie sofa 4300.jpg',
+    name: 'NATALIE SOFA 430 1910.05S',
+    price_fabric: 5250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 4340,
+    depth: 1570,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie sofa 1700.jpg',
+    name: 'NATALIE SOFA 170 1910.17S',
+    price_fabric: 2100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 1700,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie sofa 2400.jpg',
+    name: 'NATALIE SOFA 240 1910.18S',
+    price_fabric: 2700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 2400,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie section 1.jpg',
+    name: 'NATALIE SECTION 1 1910.19S',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 950,
+    depth: 1570,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 5
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie section 2.jpg',
+    name: 'NATALIE SECTION 2 1910.20S',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 950,
+    depth: 1570,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie section 3.jpg',
+    name: 'NATALIE SECTION 3 1910.21S',
+    price_fabric: 850,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 830,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie section 4.jpg',
+    name: 'NATALIE SECTION 4 1910.22S',
+    price_fabric: 1050,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 970,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie section 5.jpg',
+    name: 'NATALIE SECTION 5 1910.23S',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 1500,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/natalie section 6.jpg',
+    name: 'NATALIE SECTION 6 1910.24S',
+    price_fabric: 1350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 1500,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/mary sofa 1600.jpg',
+    name: 'MARY SOFA 160 1910.08S',
+    price_fabric: 2100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 825,
+    width: 1600,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/mary sofa 2200.jpg',
+    name: 'MARY SOFA 220 1910.09S',
+    price_fabric: 2700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 825,
+    width: 2200,
+    depth: 970,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/gravity sofa 1700.jpg',
+    name: 'GRAVITY SOFA 170 1910.32S',
+    price_fabric: 2250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 755,
+    width: 1750,
+    depth: 920,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/gravity sofa 2200.jpg',
+    name: 'GRAVITY SOFA 220 1910.33S',
+    price_fabric: 2700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 755,
+    width: 2200,
+    depth: 920,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/volcano sofa right.jpg',
+    name: 'VOLCANO SOFA 1910.35S R',
+    price_fabric: 3450,
+    price_leather: 0,
+    price_suede: 0,
+    height: 815,
+    width: 2375,
+    depth: 1145,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'sofas',
+    img: 'http://shepelcollection.com/img/1 sofa/volcano sofa left.jpg',
+    name: 'VOLCANO SOFA 1910.35S L',
+    price_fabric: 3450,
+    price_leather: 0,
+    price_suede: 0,
+    height: 815,
+    width: 2375,
+    depth: 1145,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //BENCHES
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/ronny bench.jpg',
+    name: 'RONNY BENCH 2204.01',
+    price_fabric: 600,
+    price_leather: 0,
+    price_suede: 0,
+    height: 560,
+    width: 1200,
+    depth: 530,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/flora bench.jpg',
+    name: 'FLORA BENCH 2204.02',
+    price_fabric: 1050,
+    price_leather: 0,
+    price_suede: 0,
+    height: 740,
+    width: 1600,
+    depth: 660,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/tango bench.jpg',
+    name: 'TANGO BENCH 2204.03',
+    price_fabric: 700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 530,
+    width: 1420,
+    depth: 450,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/tango bench 2.jpg',
+    name: 'TANGO BENCH 2 2204.06',
+    price_fabric: 650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 455,
+    width: 1400,
+    depth: 500,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/demure bench 2.jpg',
+    name: 'DEMURE BENCH 2 2204.07',
+    price_fabric: 600,
+    price_leather: 0,
+    price_suede: 0,
+    height: 460,
+    width: 1500,
+    depth: 470,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/demure bench.jpg',
+    name: 'DEMURE BENCH 2204.04',
+    price_fabric: 600,
+    price_leather: 0,
+    price_suede: 0,
+    height: 440,
+    width: 1500,
+    depth: 700,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/fan bench.jpg',
+    name: 'FAN BENCH 2204.05',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 890,
+    width: 1600,
+    depth: 630,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'benches',
+    img: 'http://shepelcollection.com/img/1 bench/adele bench.jpg',
+    name: 'ADELE BENCH 2204.08',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //LOVE SEATS
+  {
+    item: 'love_seats',
+    img: 'http://shepelcollection.com/img/1 love seat/billy love seat.jpg',
+    name: 'BILLY LOVE-SEAT 130 1910.04',
+    price_fabric: 1450,
+    price_leather: 0,
+    price_suede: 0,
+    height: 720,
+    width: 1300,
+    depth: 790,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'love_seats',
+    img: 'http://shepelcollection.com/img/1 love seat/anri love seat.jpg',
+    name: 'ANRI LOVE-SEAT 130 1910.03',
+    price_fabric: 1450,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 1300,
+    depth: 910,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'love_seats',
+    img: 'http://shepelcollection.com/img/1 love seat/fan love seat.jpg',
+    name: 'FAN LOVE-SEAT 130 1910.02',
+    price_fabric: 1450,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 1300,
+    depth: 910,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //CHAISE LOUNGES
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/anri chaise lounge.jpg',
+    name: 'ANRI CHAISE LOUNGE 0807.03',
+    price_fabric: 1550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 900,
+    depth: 1500,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/fan chaise lounge.jpg',
+    name: 'FAN CHAISE LOUNGE 0807.04',
+    price_fabric: 1550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 910,
+    width: 900,
+    depth: 1500,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/billy chaise lounge.jpg',
+    name: 'BILLY CHAISE LOUNGE 0807.05',
+    price_fabric: 1550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 720,
+    width: 850,
+    depth: 1500,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/shell chaise lounge LEFT.jpg',
+    name: 'SHELL CHAISE LOUNGE 0807.06 L',
+    price_fabric: 1650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 1600,
+    depth: 1030,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/shell chaise lounge RIGHT.jpg',
+    name: 'SHELL CHAISE LOUNGE 0807.06 R',
+    price_fabric: 1650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 780,
+    width: 1600,
+    depth: 1030,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/natalie chaise lounge.jpg',
+    name: 'NATALIE CHAISE LOUNGE 0807.07',
+    price_fabric: 1550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 800,
+    width: 900,
+    depth: 1570,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'chaise_lounges',
+    img: 'http://shepelcollection.com/img/1 chaise lounge/mary chaise lounge.jpg',
+    name: 'MARY CHAISE LOUNGE 0807.08',
+    price_fabric: 1550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //BEDS
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 1400 with foot.jpg',
+    name: 'ANNA BED 140 2011.01',
+    price_fabric: 2150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1400,
+    depth: 2354,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 1600 with foot.jpg',
+    name: 'ANNA BED 160 2011.02',
+    price_fabric: 2150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1600,
+    depth: 2354,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 1800 with foot.jpg',
+    name: 'ANNA BED 180 2011.03',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1800,
+    depth: 2354,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 2000 with foot.jpg',
+    name: 'ANNA BED 200 2011.04',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 2000,
+    depth: 2354,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 1400.jpg',
+    name: 'ANNA BED 140 2011.05',
+    price_fabric: 2050,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1135,
+    width: 1400,
+    depth: 2350,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 1600.jpg',
+    name: 'ANNA BED 160 2011.06',
+    price_fabric: 2050,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1135,
+    width: 1600,
+    depth: 2350,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 1800.jpg',
+    name: 'ANNA BED 180 2011.07',
+    price_fabric: 2550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1135,
+    width: 1800,
+    depth: 2350,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/anna bed 2000.jpg',
+    name: 'ANNA BED 200 2011.08',
+    price_fabric: 2550,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1135,
+    width: 2000,
+    depth: 2350,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/tango bed 1400.jpg',
+    name: 'TANGO BED 140 2011.09',
+    price_fabric: 2350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1700,
+    depth: 2380,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/tango bed 1600.jpg',
+    name: 'TANGO BED 160 2011.10',
+    price_fabric: 2350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1900,
+    depth: 2380,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/tango bed 1800.jpg',
+    name: 'TANGO BED 180 2011.11',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 2100,
+    depth: 2380,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/tango bed 2000.jpg',
+    name: 'TANGO BED 200 2011.12',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 2300,
+    depth: 2380,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 1400.jpg',
+    name: 'SAIL BED 140 2011.13',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1500,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 1600.jpg',
+    name: 'SAIL BED 160 2011.14',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1700,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 1800.jpg',
+    name: 'SAIL BED 180 2011.15',
+    price_fabric: 3100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1900,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 2000.jpg',
+    name: 'SAIL BED 200 2011.16',
+    price_fabric: 3100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 2100,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 2000 without foot.jpg',
+    name: 'SAIL BED 140 2011.17',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1500,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 2000 without foot.jpg',
+    name: 'SAIL BED 160 2011.18',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1700,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 2000 without foot.jpg',
+    name: 'SAIL BED 180 2011.19',
+    price_fabric: 3100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 1900,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/sail bed 2000 without foot.jpg',
+    name: 'SAIL BED 200 2011.20',
+    price_fabric: 3100,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1140,
+    width: 2100,
+    depth: 2230,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/jess bed 1400.jpg',
+    name: 'JESS BED 140 2011.21',
+    price_fabric: 2350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1100,
+    width: 1400,
+    depth: 2250,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/jess bed 1600.jpg',
+    name: 'JESS BED 160 2011.22',
+    price_fabric: 2350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1100,
+    width: 1600,
+    depth: 2250,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/jess bed 1800.jpg',
+    name: 'JESS BED 180 2011.23',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1100,
+    width: 1800,
+    depth: 2250,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/jess bed 2000.jpg',
+    name: 'JESS BED 200 2011.24',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1100,
+    width: 2000,
+    depth: 2250,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/kristy bed 1400.jpg',
+    name: 'KRISTY BED 140 2011.25',
+    price_fabric: 2350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/kristy bed 1600.jpg',
+    name: 'KRISTY BED 160 2011.26',
+    price_fabric: 2350,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/kristy bed 1800.jpg',
+    name: 'KRISTY BED 180 2011.27',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/kristy bed 2000.jpg',
+    name: 'KRISTY BED 200 2011.28',
+    price_fabric: 2650,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/whisper bed 1800.jpg',
+    name: 'WHISPER BED 180 2011.29',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1200,
+    width: 3440,
+    depth: 2100,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 1
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/whisper bed 2000.jpg',
+    name: 'WHISPER BED 200 2011.30',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 1200,
+    width: 3640,
+    depth: 2100,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 1400.jpg',
+    name: 'DESIRE BED 140 2011.31',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 1600.jpg',
+    name: 'DESIRE BED 160 2011.32',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 1800.jpg',
+    name: 'DESIRE BED 180 2011.33',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 2000.jpg',
+    name: 'DESIRE BED 200 2011.34',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 1400 without foot.jpg',
+    name: 'DESIRE BED 140 2011.35',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 1600 without foot.jpg',
+    name: 'DESIRE BED 160 2011.36',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 1800 without foot.jpg',
+    name: 'DESIRE BED 180 2011.37',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/desire bed 2000 without foot.jpg',
+    name: 'DESIRE BED 200 2011.38',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/angelica bed 1400.jpg',
+    name: 'ANGELICA BED 140 2011.39',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);},
+    hide: 3
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/angelica bed 1600.jpg',
+    name: 'ANGELICA BED 160 2011.40',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/angelica bed 1800.jpg',
+    name: 'ANGELICA BED 180 2011.41',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'beds',
+    img: 'http://shepelcollection.com/img/1 bed/angelica bed 2000.jpg',
+    name: 'ANGELICA BED 200 2011.42',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  //OTTOMANS
+  {
+    item: 'ottomans',
+    img: 'http://shepelcollection.com/img/1 ottoman/demure ottoman.jpg',
+    name: 'DEMURE OTTOMAN 2107.01',
+    price_fabric: 450,
+    price_leather: 0,
+    price_suede: 0,
+    height: 440,
+    width: 700,
+    depth: 700,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'ottomans',
+    img: 'http://shepelcollection.com/img/1 ottoman/stiven ottoman.jpg',
+    name: 'STEVEN OTTOMAN 2107.02',
+    price_fabric: 1150,
+    price_leather: 0,
+    price_suede: 0,
+    height: 425,
+    width: 1100,
+    depth: 1100,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'ottomans',
+    img: 'http://shepelcollection.com/img/1 ottoman/ronny ottoman.jpg',
+    name: 'RONNY OTTOMAN 2107.03',
+    price_fabric: 420,
+    price_leather: 0,
+    price_suede: 0,
+    height: 580,
+    width: 690,
+    depth: 520,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+]
+
+var hard =[
+  //DINNER TABLES
+  {
+    item: 'dinner_table',
+    img: 'http://shepelcollection.com/img/2 dining table/victoria table.jpg',
+    name: 'VICTORIA DINING TABLE',
+    price_fabric: 5700,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'dinner_table',
+    img: 'http://shepelcollection.com/img/2 dining table/charlotte table.jpg',
+    name: 'CHARLOTTE DINING TABLE',
+    price_fabric: 3250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 750,
+    width: 1616,
+    depth: 1400,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'dinner_table',
+    img: 'http://shepelcollection.com/img/2 dining table/grace table 1050.jpg',
+    name: 'GRACE DINING TABLE 1050',
+    price_fabric: 3250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 750,
+    width: 1050,
+    depth: 1050,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'dinner_table',
+    img: 'http://shepelcollection.com/img/2 dining table/grace dining table 2400/1.png',
+    name: 'GRACE DINING TABLE 2400',
+    price_fabric: 3250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'dinner_table',
+    img: 'http://shepelcollection.com/img/2 dining table/grace dining table 2700/1.png',
+    name: 'GRACE DINING TABLE 2700',
+    price_fabric: 3250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //DESKS
+  {
+    item: 'desks',
+    img: 'http://shepelcollection.com/img/2 writing table/olivia desk.jpg',
+    name: 'OLIVIA DESK',
+    price_fabric: 3250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'desks',
+    img: 'http://shepelcollection.com/img/2 writing table/sheldon writing table/1.png',
+    name: 'SHELDON WRITING TABLE',
+    price_fabric: 2250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 730,
+    width: 1700,
+    depth: 650,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    {
+    item: 'desks',
+    img: 'http://shepelcollection.com/img/2 writing table/otis writing table/1.png',
+    name: 'OTIS WRITING TABLE',
+    price_fabric: 2250,
+    price_leather: 0,
+    price_suede: 0,
+    height: 730,
+    width: 1700,
+    depth: 650,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+
+  // DRESSING TABLES
+  {
+    item: 'dressing_tables',
+    img: 'http://shepelcollection.com/img/2 dressing table/sydney dressing table/1.png',
+    name: 'SYDNEY DRESSING TABLE',
+    price_fabric: 1875,
+    price_leather: 0,
+    price_suede: 0,
+    height: 750,
+    width: 1300,
+    depth: 758,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    {
+    item: 'dressing_tables',
+    img: 'http://shepelcollection.com/img/2 make-up table/loren make-up table.jpg',
+    name: 'LOREN DRESSING TABLE',
+    price_fabric: 1500,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //COFEE TABLES
+  {
+    item: 'coffee_table',
+    img: 'http://shepelcollection.com/img/2 coffee table/norman coffee table.jpg',
+    name: 'NORMAN COFFEE TABLE',
+    price_fabric: 1625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'coffee_table',
+    img: 'http://shepelcollection.com/img/2 coffee table/rain coffee table.jpg',
+    name: 'RAIN COFFEE TABLE',
+    price_fabric: 1625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'coffee_table',
+    img: 'http://shepelcollection.com/img/2 coffee table/kelvin coffee table.jpg',
+    name: 'KELVIN COFFEE TABLE',
+    price_fabric: 1625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'coffee_table',
+    img: 'http://shepelcollection.com/img/2 coffee table/aurthur table.jpg',
+    name: 'AUTHUR TABLE',
+    price_fabric: 1125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 1000,
+    depth: 1000,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'coffee_table',
+    img: 'http://shepelcollection.com/img/2 coffee table/kassandra coffee table.jpg',
+    name: 'KASSANDRA COFFEE TABLE',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 700,
+    depth: 700,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    {
+    item: 'coffee_table',
+    img: 'http://shepelcollection.com/img/2 coffee table/mondrian table.jpg',
+    name: 'MONDRIAN TABLE',
+    price_fabric: 0,
+    price_leather: 0,
+    price_suede: 0,
+    height: 400,
+    width: 1100,
+    depth: 800,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //ACCENT TABLES
+  {
+    item: 'accent_table',
+    img: 'http://shepelcollection.com/img/2 accent table/basis accent table.jpg',
+    name: 'BASIS ACCENT TABLE',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'accent_table',
+    img: 'http://shepelcollection.com/img/2 accent table/donald accent table.jpg',
+    name: 'DONALD ACCENT TABLE',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'accent_table',
+    img: 'http://shepelcollection.com/img/2 accent table/donald accent table 2.jpg',
+    name: 'DONALD ACCENT TABLE 2',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'accent_table',
+    img: 'http://shepelcollection.com/img/2 accent table/theodore accent table.jpg',
+    name: 'THEODORE ACCENT TABLE',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'accent_table',
+    img: 'http://shepelcollection.com/img/2 accent table/rock accent table.jpg',
+    name: 'ROCK ACCENT TABLE',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'accent_table',
+    img: 'http://shepelcollection.com/img/2 accent table/beatrice table.jpg',
+    name: 'BEATRICE TABLE',
+    price_fabric: 625,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    {
+    item: 'consoles',
+    img: 'http://shepelcollection.com/img/leslie console.jpg',
+    name: 'LESLIE CONSOLE',
+    price_fabric: 1500,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //NIGHTSTAND
+  {
+    item: 'nightstands',
+    img: 'http://shepelcollection.com/img/2 nightstand/desire nightstand/1.png',
+    name: 'DESIRE NIGHTSTAND',
+    price_fabric: 1125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 600,
+    width: 790,
+    depth: 530,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'nightstands',
+    img: 'http://shepelcollection.com/img/2 nightstand/desire nightstand circle/1.png',
+    name: 'DESIRE NIGHTSTAND CIRCLE',
+    price_fabric: 1125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 600,
+    width: 700,
+    depth: 700,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'nightstands',
+    img: 'http://shepelcollection.com/img/2 nightstand/catie nightstant 600.jpg',
+    name: 'KATIE NIGHTSTAND 600',
+    price_fabric: 1312,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'nightstands',
+    img: 'http://shepelcollection.com/img/2 nightstand/catie nightstant 800.jpg',
+    name: 'KATIE NIGHTSTAND 800',
+    price_fabric: 1312,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //COMMODES
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/dominica commode/1.png',
+    name: 'DOMINICA COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 890,
+    width: 1720,
+    depth: 570,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/vincent commode/1.png',
+    name: 'VINCENT COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 932,
+    width: 2200,
+    depth: 480,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/oscar commode.jpg',
+    name: 'OSCAR COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/merley commode/1.png',
+    name: 'MERLEY COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 693,
+    width: 2021,
+    depth: 600,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/parker commode.jpg',
+    name: 'PARKER COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/gabriel commode.jpg',
+    name: 'GABRIEL COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/sebastian commode.jpg',
+    name: 'SEBASTIAN COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/nathaniel commode.jpg',
+    name: 'NATHANIEL COMMODE',
+    price_fabric: 3125,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'commodes',
+    img: 'http://shepelcollection.com/img/2 commode/camellia commode/1.png',
+    name: 'CAMELLIA COMMODE',
+    price_fabric: 2790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 757,
+    width: 1800,
+    depth: 530,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //WARDROBES
+    {
+    item: 'wardrobes',
+    img: '',
+    name: '',
+    price_fabric: 1375,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //BOOKCASES
+    {
+    item: 'bookcases',
+    img: '',
+    name: '',
+    price_fabric: 1375,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //STANDS
+    {
+    item: 'stands',
+    img: 'http://shepelcollection.com/img/2 showcase/tobias stand.jpg',
+    name: 'TOBIAS STAND',
+    price_fabric: 1375,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //SHOWCASES
+  {
+    item: 'showcases',
+    img: 'http://shepelcollection.com/img/2 showcase/fabian showcase.jpg',
+    name: 'FABIAN SHOWCASE',
+    price_fabric: 2790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'showcases',
+    img: 'http://shepelcollection.com/img/2 showcase/jacquin showcase.jpg',
+    name: 'JACQUINE SHOWCASE',
+    price_fabric: 2790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'showcases',
+    img: 'http://shepelcollection.com/img/2 showcase/sofia showcase.jpg',
+    name: 'SOFIA SHOWCASE',
+    price_fabric: 2790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'showcases',
+    img: 'http://shepelcollection.com/img/2 showcase/jacquin showcase large.jpg',
+    name: 'JACQUINE SHOWCASE LARGE',
+    price_fabric: 2790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+  {
+    item: 'showcases',
+    img: 'http://shepelcollection.com/img/2 showcase/sofia showcase large.jpg',
+    name: 'SOFIA SHOWCASE LARGE',
+    price_fabric: 2790,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //PEDESTALS
+  {
+    item: 'pedestals',
+    img: 'http://shepelcollection.com/img/2 showcase/harrison pedestal.jpg',
+    name: 'HARRISON PEDESTAL',
+    price_fabric: 690,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //RADIANT SRCEENS
+  {
+    item: 'radiant_screens',
+    img: '',
+    name: '',
+    price_fabric: 690,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+    //BARS
+  {
+    item: 'bars',
+    img: '',
+    name: '',
+    price_fabric: 690,
+    price_leather: 0,
+    price_suede: 0,
+    height: 0,
+    width: 0,
+    depth: 0,
+    volume: function get_volume(){
+        return ((this.height/1000 + wrapping*2/1000)*(this.width/1000 + wrapping*2/1000)*(this.depth/1000 + wrapping*2/1000)).toFixed(2);}
+    },
+]
+
+var buttons = [
+
+    {
+        id:'chairs',
+        item: 1,
+        start: function (){ return $("table tr.chairs").first().index(); },
+        end: function (){ return $("table tr.chairs").last().index(); },
+    },
+    {
+        id:'lounge_chairs',
+        item: 1,
+        start: function (){ return $("table tr.lounge_chairs").first().index(); },
+        end: function (){ return $("table tr.lounge_chairs").last().index(); },
+    },
+    {
+        id:'sofas',
+        item: 1,
+        start: function (){ return $("table tr.sofas").first().index(); },
+        end: function (){ return $("table tr.sofas").last().index(); },},
+    {
+        id:'benches',
+        item: 1,
+        start: function (){ return $("table tr.benches").first().index(); },
+        end: function (){ return $("table tr.benches").last().index(); },
+    },
+    {
+        id:'love_seats',
+        item: 1,
+        start: function (){ return $("table tr.love_seats").first().index(); },
+        end: function (){ return $("table tr.love_seats").last().index(); },
+    },
+    {
+        id:'chaise_lounges',
+        item: 1,
+        start: function (){ return $("table tr.chaise_lounges").first().index(); },
+        end: function (){ return $("table tr.chaise_lounges").last().index(); },
+    },
+    {
+        id:'beds',
+        item: 1,
+        start: function (){ return $("table tr.beds").first().index(); },
+        end: function (){ return $("table tr.beds").last().index(); },
+    },
+    {
+        id:'ottomans',
+        item: 1,
+        start: function (){ return $("table tr.ottomans").first().index(); },
+        end: function (){ return $("table tr.ottomans").last().index(); },
+    },
+
+    {
+        id:'dinner_table',
+        item: 2,
+        start: function (){ return $("table tr.dinner_table").first().index(); },
+        end: function (){ return $("table tr.dinner_table").last().index(); },
+    },
+    {
+        id:'desks',
+        item: 2,
+        start: function (){ return $("table tr.desks").first().index(); },
+        end: function (){ return $("table tr.desks").last().index(); },
+    },
+    {
+        id:'dressing_tables',
+        item: 2,
+        start: function (){ return $("table tr.dressing_tables").first().index(); },
+        end: function (){ return $("table tr.dressing_tables").last().index(); },
+    },
+    {
+        id:'coffee_table',
+        item: 2,
+        start: function (){ return $("table tr.coffee_table").first().index(); },
+        end: function (){ return $("table tr.coffee_table").last().index(); },
+    },
+    {
+        id:'accent_table',
+        item: 2,
+        start: function (){ return $("table tr.accent_table").first().index(); },
+        end: function (){ return $("table tr.accent_table").last().index(); },
+    },
+    {
+        id:'consoles',
+        item: 2,
+        start: function (){ return $("table tr.consoles").first().index(); },
+        end: function (){ return $("table tr.consoles").last().index(); },
+    },
+    {
+        id:'nightstands',
+        item: 2,
+        start: function (){ return $("table tr.nightstands").first().index(); },
+        end: function (){ return $("table tr.nightstands").last().index(); },
+    },
+    {
+        id:'commodes',
+        item: 2,
+        start: function (){ return $("table tr.commodes").first().index(); },
+        end: function (){ return $("table tr.commodes").last().index(); },
+    },
+    {
+        id:'wardrobes',
+        item: 2,
+        start: function (){ return $("table tr.wardrobes").first().index(); },
+        end: function (){ return $("table tr.wardrobes").last().index(); },
+    },
+    {
+        id:'bookcases',
+        item: 2,
+        start: function (){ return $("table tr.bookcases").first().index(); },
+        end: function (){ return $("table tr.bookcases").last().index(); },
+    },
+    {
+        id:'stands',
+        item: 2,
+        start: function (){ return $("table tr.stands").first().index(); },
+        end: function (){ return $("table tr.stands").last().index(); },
+    },
+    {
+        id:'showcases',
+        item: 2,
+        start: function (){ return $("table tr.showcases").first().index(); },
+        end: function (){ return $("table tr.showcases").last().index(); },
+    },
+    {
+        id:'pedestals',
+        item: 2,
+        start: function (){ return $("table tr.pedestals").first().index(); },
+        end: function (){ return $("table tr.pedestals").last().index(); },
+    },
+    {
+        id:'radiant_screens',
+        item: 2,
+        start: function (){ return $("table tr.radiant_screens").first().index(); },
+        end: function (){ return $("table tr.radiant_screens").last().index(); },
+    },
+    {
+        id:'bars',
+        item: 2,
+        start: function (){ return $("table tr.bars").first().index(); },
+        end: function (){ return $("table tr.bars").last().index(); },
+    }
+]
+
+var discount = 50; //СКИДКА
+var index = 1; //ОБЩИЙ КОЭФФИЦИЕНТ ПРАЙСА
+var delivery; //= 50; //СТОИМОСТЬ ДОСТАВКИ В ЕВРО ЗА М.КУБ.
+var showcases = 0; //ПОРЯДКОВЫЙ НОМЕР ПЕРВОЙ ВИТРИНЫ
+var items_price = 0; //ОБЩАЯ СТОИМОСТЬ ТОВАРОВ ПО 1Й КОМНАТЕ
+var delivery_price = 0; //ОБЩАЯ СТОИМОСТЬ ДОСТАВКИ ПО 1Й КОМНАТЕ
+var total_total = 0;    //ОБЩАЯ СТОИМОСТЬ ТОВАРОВ ПО ВСЕМ КОМНАТАМ
+var room_counter = 0;   //СЧЕТЧИК КОМНАТ
+
+var result = '<table>';
+
+var top_header = '<tr><td><img alt="" src="http://shepelcollection.com/img/logo.jpg"></td><td></td><td></td><td></td><td></td><td></td><th colspan="5" style="font-size: 14px; text-align: center;"><br>www.shepelfurniture.com<br>office@shepelfurniture.com</th></tr><tr><td colspan="9"></td></tr>';
+var room_header_name = '<th colspan="11" style="font-size: 18px; text-align: center; height: 30px; border: 1px solid black; background-color: #ccc;">';
+
+var room_header_before_discount = '<tr style="font-size: 16px; height: 30px;"><th style="border: 1px solid black; background-color: #eee;">PHOTO</th><th style="border: 1px solid black; background-color: #eee; ">NAME</th><th style="border: 1px solid black; background-color: #eee;">UPHOLSTERY</th><th style="border: 1px solid black; background-color: #eee;">CATEGORY</th><th style="border: 1px solid black; background-color: #eee;">MATERIAL</th><th style="border: 1px solid black; background-color: #eee;">FINISHES</th><th style="border: 1px solid black; background-color: #eee;">PRICE, &#8364;</th><th style="border: 1px solid black; background-color: #eee;">';
+var room_header_after_discount = '</th><th style="border: 1px solid black; background-color: #eee;">AMOUNT</th><th style="border: 1px solid black; background-color: #eee;">TOTAL PRICE</th><th style="border: 1px solid black; background-color: #eee;">DELIVERY</th></tr>';
+
+var room_footer_style1 = '<tr><th colspan="9" style="border:1px solid black; font-size: 18px; background-color:#eee;">Items&#8242; price:</th><th colspan="2" style="border:1px solid black; font-size: 18px; background-color:#eee;">';
+var room_footer_style2 = '<tr><th colspan="9" style="border:1px solid black; font-size: 18px; background-color:#eee;">Delivery price:</th><th colspan="2" style="border:1px solid black; font-size: 18px; background-color:#eee;">';
+var room_footer_style3 = '<tr><th colspan="9" style="border:1px solid black; font-size: 18px; background-color:#eee;">Total price:</th><th colspan="2" style="border:1px solid black; font-size: 18px; background-color:#eee;">';
+var room_footer_style4 = '<tr><th colspan="9" style="border:1px solid black; font-size: 18px; background-color:#eee;">TOTAL:</th><th colspan="2" style="border:1px solid black; font-size: 18px; background-color:#eee;">';
+result = result + top_header;
+
+//ФОРМИРОВАНИЕ СПИСКА ДЕРЕВА
+var wood_names = '<td class="get_wood"><img src="img/Java.jpg" alt="" style="height: 80px;margin: -10px 0 10px 0;"><div><select class="wood">';
+var k = 1;
+for (var i = 0; i < my_object['Wood']['Names'].length; i++) {
+    wood_names = wood_names + '<option value="'+ k + '">' + my_object['Wood']['Names'][i] + '</option>';
+    k++;
+}
+wood_names = wood_names + '</select><p class="add_wood"></p><p class="after"></p></div></td>';
+
+//ДИНАМИЧЕСКОЕ ПОСТРОЕНИЕ ТАБЛИЦЫ
+$( document ).ready(function() {
+    var hidden_items = [];
+    var j = 0;
+  for ( var i = 0; i < fluffy.length; i++){
+    //ЕСЛИ ЕСТЬ СКРЫТЫЕ ЭЛЕМЕНТЫ, ТО СОХРАНИТЬ ИХ В МАССИВ
+    if (fluffy[i]['hide']){
+        $("#testTable").append('<tr class="unvisible_items ' + fluffy[i]['item'] + '"><td class="check"><input class="checkbox" type="checkbox"><div class="plus"><i class="fa fa-plus" aria-hidden="true"></i></div></td><td><img alt="" src="' + fluffy[i]['img'] + '" /></td><td class="name">' + fluffy[i]['name'] + '<br><span>height: ' + fluffy[i]['height'] + ' mm</span><br><span>width: ' + fluffy[i]['width'] + ' mm</span><br><span>depth: ' + fluffy[i]['depth'] + ' mm</span><br><span>volume: ' + fluffy[i].volume() + ' sq.m.</span></td><td class="get_furnish"><div><select class="furnish"><option value="Fabric">Fabric</option><option value="Leather">Leather</option><option value="Suede">Suede</option></select><p class="after"></p></div></td><td class="category"><div><select class="get_category"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><p class="add_category"></p><p class="after"></p></div></td><td class="get_material"><div><select class="material"><option value="name 1">name 1</option><option value="name 2">name 2</option><option value="name 3">name 3</option><option value="name 4">name 4</option><option value="name 5">name 5</option><option value="name 6">name 6</option><option value="name 7">name 7</option></select>'+ wood_names + '<td class="price"></td><td class="price_plus"><td class="discount"></td></td><td class="amount"><input class="get_amount" type="number" min="1" max="200" step="1" value ="1"/></td><td class="total"></td><td class="delivery"></td><td class="unvisible">' + fluffy[i]['price_fabric']*2 + '</td><td class="unvisible">' + fluffy[i]['price_leather']*2 + '</td><td class="unvisible">' + fluffy[i]['price_suede']*2 + '</td></tr>');
+        //СОЗДАНИЕ МАССИВА (НАЧАЛЬНАЯ ПОЗИЦИЯ СКРЫТОГО ЭЛЕМЕНТА + КОЛИЧЕСТВО СКРЫТЫХ ЭЛЕМЕНТОВ ЭТОГО ОБЪЕКТА)
+        hidden_items[j] = i;
+        j++;
+        hidden_items[j] = fluffy[i]['hide'];
+        j++;
+    }else{
+    //ОТОБРАЗИТЬ СПИСОК МЯГКОЙ МЕБЕЛИ
+        $("#testTable").append('<tr class="' + fluffy[i]['item'] + '"><td class="check"><input class="checkbox" type="checkbox"></td><td><img alt="" src="' + fluffy[i]['img'] + '" /></td><td class="name">' + fluffy[i]['name'] + '<br><span>height: ' + fluffy[i]['height'] + ' mm</span><br><span>width: ' + fluffy[i]['width'] + ' mm</span><br><span>depth: ' + fluffy[i]['depth'] + ' mm</span><br><span>volume: ' + fluffy[i].volume() + ' sq.m.</span></td><td class="get_furnish"><div><select class="furnish"><option value="Fabric">Fabric</option><option value="Leather">Leather</option><option value="Suede">Suede</option></select><p class="after"></p></div></td><td class="category"><div><select class="get_category"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><p class="add_category"></p><p class="after"></p></div></td><td class="get_material"><div><select class="material"><option value="name 1">name 1</option><option value="name 2">name 2</option><option value="name 3">name 3</option><option value="name 4">name 4</option><option value="name 5">name 5</option><option value="name 6">name 6</option><option value="name 7">name 7</option></select>'+ wood_names + '<td class="price"></td><td class="price_plus"></td><td class="discount"></td><td class="amount"><input class="get_amount" type="number" min="1" max="200" step="1" value ="1"/></td><td class="total"></td><td class="delivery"></td><td class="unvisible">' + fluffy[i]['price_fabric']*2 + '</td><td class="unvisible">' + fluffy[i]['price_leather']*2 + '</td><td class="unvisible">' + fluffy[i]['price_suede']*2 + '</td></tr>');
+        }
+    }
+
+  for ( var i = 0; i < hard.length; i++){
+  //ОТОБРАЗИТЬ СПИСОК СТОЛЯРНОЙ МЕБЕЛИ
+    $("#testTable").append('<tr class="' + hard[i]['item'] + '"><td class="check"><input class="checkbox" type="checkbox"></td><td><img alt="" src="' + hard[i]['img'] + '" /></td><td class="name">' + hard[i]['name'] + '<br><span>height: ' + hard[i]['height'] + ' mm</span><br><span>width: ' + hard[i]['width'] + ' mm</span><br><span>depth: ' + hard[i]['depth'] + ' mm</span><br><span>volume: ' + hard[i].volume() + ' sq.m.</span></td><td style="opacity:0;" class="get_furnish"><div><select class="furnish"><option value="fabric">Fabric</option></select><p class="after"></p></div></td><td style="opacity:0;" class="category"><div><select class="get_category"><option value="1">1</option></select><p class="add_category"></p><p class="after"></p></div></td><td style="opacity:0;" class="get_material"><div><select class="material"><option value="name 1">name 1</option></select>'+ wood_names + '<td class="price"></td><td class="price_plus"><td class="discount"></td></td><td class="amount"><input class="get_amount" type="number" min="1" max="200" step="1" value ="1"/></td><td class="total"></td><td class="delivery"></td><td class="unvisible">' + hard[i]['price_fabric'] + '</td><td class="unvisible">' + hard[i]['price_leather'] + '</td><td class="unvisible">' + hard[i]['price_suede'] + '</td></tr>');
+  }
+
+  all_rows = $('table tr').length;
+  for (var i = 1; i < all_rows; i++){
+    $('table tr').eq(i).hide();
+  }
+
+  // console.log(all_rows);
+
+
+  showcases = $("table tr.showcases").last().index();
+
+  //СКРЫТЬ ПОВТОРЯЮЩИЕСЯ ЭЛЕМЕНТЫ ПОСЛЕ ТОГО, КАК СФОРМИРОВАНА ТАБЛИЦА
+  for (var i = 0; i < hidden_items.length; i = i+2){
+    for (var k = 0; k < hidden_items[i+1]; k++){
+        $('table tr').eq(hidden_items[i]+k+2).css('display', 'none');
+    }
+  }
+
+  for (key in fields){
+    fields_length++;
+  }
+
+});
+
+
+//ИЗМЕНЕНИЕ КОЭФФИЦИЕНТА!!!
+$(document).on('change','input[class=index]',function(){
+  index = +$('.index').val();
+  var rows = $('table tr').length;
+  var array = [];
+  var j = 0;
+  for (var i = 1; i < rows; i++){
+    if ($('table tr').eq(i).find('td').eq(fields['check']).find('input').prop('checked')){
+      array[j] = i;
+      j++
+    }
+  }
+
+  for (var i = 0; i < array.length; i++){
+    var category = $('table tr').eq(array[i]).find('td').eq(fields['category']).find('.get_category').prop('value');
+    var furnish = $('table tr').eq(array[i]).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+    var finish = $('table tr').eq(array[i]).find('td').eq(fields['finishes']).find('.wood').prop('value');
+    var amount = $('table tr').eq(array[i]).find('td').eq(fields['amount']).find('.get_amount').val();
+
+    sum(furnish, category, finish, amount, array[i]-1, index, discount);
+  }
+
+});
+
+
+//ИЗМЕНЕНИЕ СКИДКИ!!!
+$(document).on('change','input[class=discount]',function(){
+  discount = 100 - +parseInt($('.discount').val());
+  $('.discount').val(100 - discount + "%");
+
+  var rows = $('table tr').length;
+  var array = [];
+  var j = 0;
+  for (var i = 1; i < rows; i++){
+    if ($('table tr').eq(i).find('td').eq(fields['check']).find('input').prop('checked')){
+      array[j] = i;
+      j++;
+    }
+  }
+
+  for (var i = 0; i < array.length; i++){
+    var category = $('table tr').eq(array[i]).find('td').eq(fields['category']).find('.get_category').prop('value');
+    var furnish = $('table tr').eq(array[i]).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+    var finish = $('table tr').eq(array[i]).find('td').eq(fields['finishes']).find('.wood').prop('value');
+    var amount = $('table tr').eq(array[i]).find('td').eq(fields['amount']).find('.get_amount').val();
+
+    sum(furnish, category, finish, amount, array[i]-1, index, discount);
+  }
+
+});
+
+
+//ИЗМЕНЕНИЕ СТОИМОСТИ ДОСТАВКИ!!!
+$(document).on('change','input[class=delivery_index]',function(){
+  delivery = +parseInt($('.delivery_index').val());
+  $('.delivery_index').val(delivery + '€');
+
+  var rows = $('table tr').length;
+  var array = [];
+  var j = 0;
+
+  for (var i = 1; i < rows; i++){
+    if ($('table tr').eq(i).find('td').eq(fields['check']).find('input').prop('checked')){
+      array[j] = i;
+      j++
+    }
+  }
+
+  for (var i = 0; i < array.length; i++){
+    change_delivery(delivery, array[i]);
+  }
+
+});
+
+
+function change_delivery(a, b){
+    var delivery = a;
+    var row_index = b;
+
+    if (row_index <= fluffy.length){
+        var amount = $('table tr').eq(row_index).find('td').eq(fields['amount']).find('.get_amount').val();
+        $('table tr').eq(row_index).find('td').eq(fields['delivery']).html((fluffy[row_index-1].volume()*delivery*amount).toFixed(0));
+    }else{
+        var amount = $('table tr').eq(row_index).find('td').eq(fields['amount']).find('.get_amount').val();
+        $('table tr').eq(row_index).find('td').eq(fields['delivery']).html((hard[row_index-fluffy.length-1].volume()*delivery*amount).toFixed(0));
+    }
+}
+
+//ИЗМЕНЕНИЕ НАЗВАНИЯ КОМНАТЫ!!!
+$(document).on('change','div[id=room_name] input',function(){
+
+  current_room_name = $('#room_name input').val();
+
+});
+
+
+//ИЗМЕНЕНИЕ ФЛАЖКА!!!
+$(document).on('change','input[class=checkbox]',function(){
+  var row_index = $(this).parent().parent().index();
+  var check = $(this).prop('checked');
+  var delivery = +parseInt($('.delivery_index').val());
+
+  if (check == true){
+    $('table tr').eq(row_index+1).css('background-color', '#ccffff');
+    var furnish = $('table tr').eq(row_index+1).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+    var category = $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.get_category').prop('value');
+    var finish = $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.wood').prop('value');
+    var amount = $('table tr').eq(row_index+1).find('td').eq(fields['amount']).find('.get_amount').val();
+
+    if (row_index < fluffy.length){
+         var delivery_price = (fluffy[row_index].volume()*delivery).toFixed(0);
+        $('table tr').eq(row_index+1).find('td').eq(fields['delivery']).html(delivery_price);
+
+        // (fluffy[row_index-1].volume()*delivery*amount).toFixed(0)
+
+
+        sum(furnish, category, finish, amount, row_index, index, discount);
+
+    }else if (row_index >= fluffy.length){
+        row_index = row_index - fluffy.length;
+        var delivery_price = +(hard[row_index].volume()*delivery).toFixed();
+        $('table tr').eq(row_index+fluffy.length+1).find('td').eq(fields['delivery']).html(delivery_price);
+        sum(furnish, category, finish, amount, row_index+fluffy.length, index, discount);
+    }
+
+  } else {
+    $('table tr').eq(row_index+1).css('background-color', '#fff');
+
+    reset(row_index);
+  }
+
+});
+
+
+//ПОКАЗАТЬ/СКРЫТЬ ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ КОЛЛЕКЦИИ нажатием на -/*!!!
+$(document).on('click','div[class=plus]',function(){
+  var row_index = $(this).parent().parent().index();
+  var start = row_index+1;
+  var end = fluffy[row_index]['hide'] + row_index +1;
+
+  if ($('table tr').eq(row_index+1).find('td').eq(fields['check']).find('div').find('i').hasClass("fa-plus")){
+    $('table tr').eq(row_index+1).find('td').eq(fields['check']).find('div').html('<i class="fa fa-minus" aria-hidden="true"></i>');
+    for (var i = start; i <= end; i++){
+        $('table tr').eq(i).show('slow');
+    }
+  }else {
+    $('table tr').eq(row_index+1).find('td').eq(fields['check']).find('div').html('<i class="fa fa-plus" aria-hidden="true"></i>');
+    for (var i = start+1; i <= end; i++){
+        $('table tr').eq(i).hide('slow');
+    }
+  }
+});
+
+
+//ИЗМЕНЕНИЕ ТКАНЬ/КОЖА/ЗАМША!!!
+$(document).on('change','select[class=furnish]',function(){
+
+  var row_index = $(this).parent().parent().parent().index();
+  var check = $('table tr').eq(row_index+1).find('td').eq(fields['check']).find('.checkbox').prop('checked');
+  var furnish = $('table tr').eq(row_index+1).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+  var finish = $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.wood').prop('value');
+  var amount = $('table tr').eq(row_index+1).find('td').eq(fields['amount']).find('.get_amount').val();
+
+  change_category(row_index, furnish);
+  var category = $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.get_category').prop('value');
+
+  if (check == true){
+    sum(furnish, category, finish, amount, row_index, index, discount);
+  }
+});
+
+//ФОРМИРОВАНИЕ СПИСКА МАТЕРИАЛОВ ПРИ СМЕНЕ МАТЕРИАЛА И КАТЕГОРИИ
+function change_category(a, b){
+    var row_index = a;
+    var furnish = b;
+
+    var category_html = '<div><select class="get_category">';
+    var material_html = '<div><select class="material">';
+
+    for (var i = 1; i <= my_object[furnish]['category'].length; i++){
+        category_html = category_html + '<option value="' + i + '">' + i + '</option>';
+    }
+    category_html = category_html + '</select><p class="add_category"></p><p class="after"></p></div>';
+    $('table tr').eq(row_index+1).find('td').eq(fields['category']).html(category_html);
+
+    for (var i = 0; i < my_object[furnish]['1'].length; i++){
+        material_html = material_html + '<option value="name ' + i+1 + '">' + my_object[furnish]['1'][i] + '</option>';
+    }
+    material_html = material_html + '</select></div>';
+    $('table tr').eq(row_index+1).find('td').eq(fields['name_of_material']).html(material_html);
+
+}
+
+function change_material(a, b, c){
+    var row_index = a;
+    var furnish = b;
+    var category = c;
+    var material_html = '<div><select class="material">';
+
+    for (var i = 0; i < my_object[furnish][category].length; i++){
+        material_html = material_html + '<option value="name ' + i+1 + '">' + my_object[furnish][category][i] + '</option>';
+    }
+    material_html = material_html + '</select></div>';
+    $('table tr').eq(row_index+1).find('td').eq(fields['name_of_material']).html(material_html);
+}
+
+
+//ИЗМЕНЕНИЕ КАТЕГОРИИ ТКАНИ/КОЖИ/ЗАМШИ!!!
+$(document).on('change','select[class=get_category]',function(){
+  var row_index = $(this).parent().parent().parent().index();
+  var col_index = $(this).parent().parent().index();
+  var check = $('table tr').eq(row_index+1).find('td').eq(fields['check']).find('.checkbox').prop('checked');
+  var category = $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.get_category').prop('value');
+  var furnish = $('table tr').eq(row_index+1).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+  var finish = $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.wood').prop('value');
+  var amount = $('table tr').eq(row_index+1).find('td').eq(fields['amount']).find('.get_amount').val();
+
+  change_material(row_index, furnish, category);
+
+  if (check == true){
+    sum(furnish, category, finish, amount, row_index, index, discount);
+  }
+});
+
+
+
+//ИЗМЕНЕНИЕ ДЕРЕВА!!!
+$(document).on('change','select[class=wood]', function(){
+  var row_index = $(this).parent().parent().parent().index();
+  var col_index = $(this).parent().parent().index();
+  var check = $('table tr').eq(row_index+1).find('td').eq(fields['check']).find('.checkbox').prop('checked');
+  var category = $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.get_category').prop('value');
+  var furnish = $('table tr').eq(row_index+1).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+  var finish = $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.wood').prop('value');
+  var amount = $('table tr').eq(row_index+1).find('td').eq(fields['amount']).find('.get_amount').val();
+
+  $('table tr').eq(row_index+1).find('.get_wood img').attr("src", my_object['Wood']['Wood_images'][finish-1]);
+
+
+  if (check == true){
+    sum(furnish, category, finish, amount, row_index, index, discount);
+  }
+});
+
+
+//ИЗМЕНЕНИЕ КОЛИЧЕСТВА!!!
+$(document).on('change','input[class=get_amount]',function(){
+  var row_index = $(this).parent().parent().index();
+  // var col_index = $(this).parent().index();
+  var check = $('table tr').eq(row_index+1).find('td').eq(fields['check']).find('.checkbox').prop('checked');
+  var category = $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.get_category').prop('value');
+  var furnish = $('table tr').eq(row_index+1).find('td').eq(fields['upholstery']).find('.furnish option:selected').prop('value');
+  var finish = $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.wood').prop('value');
+  var amount = $('table tr').eq(row_index+1).find('td').eq(fields['amount']).find('.get_amount').val();
+
+  if (check == true){
+
+    sum(furnish, category, finish, amount, row_index, index, discount);
+  }
+});
+
+
+//ПРОСЧЕТ СТРОКИ!!!
+function sum(a, b, c, d, e, f, g){
+  var furnish = a;
+  var category = b;
+  var finish = c;
+  var amount = d;
+  var row_index = e;
+  var index = f;
+  var discount = g;
+  var delivery = +parseInt($('.delivery_index').val());
+
+  if (row_index < fluffy.length){ //МЯГКАЯ МЕБЕЛЬ
+    if (furnish == 'Fabric'){
+        var price = +$('table tr').eq(row_index+1).find('td').eq(fields['fabric_price']).html();
+        get_sum(price, index, discount);
+      } else if (furnish == 'Leather'){
+        var price = +$('table tr').eq(row_index+1).find('td').eq(fields['leather_price']).html();
+        get_sum(price, index, discount);
+      }else{
+        var price = +$('table tr').eq(row_index+1).find('td').eq(fields['suede_price']).html();
+        get_sum(price, index, discount);
+      }
+  }else{ //СТОЛЯРКА
+    var price = +$('table tr').eq(row_index+1).find('td').eq(fields['fabric_price']).html();
+    get_sum(price, index, discount);
+  }
+
+
+function get_sum(a, b, c){
+    var cost = a;
+    var index = b;
+    var discount = c;
+
+    if (row_index < fluffy.length){  //МЯГКАЯ МЕБЕЛЬ
+        //считаем доставку
+        $('table tr').eq(row_index+1).find('td').eq(fields['delivery']).html(+(fluffy[row_index].volume()*delivery*amount).toFixed(0));
+        
+        //копируем значение базовой цены в столбик price
+        $('table tr').eq(row_index+1).find('td').eq(fields['price_start']).html(cost);
+
+        $('table tr').eq(row_index+1).find('td').eq(fields['price_of_one_item']).html(Math.round(cost*index*my_object[furnish].category[category-1]*my_object.Wood[furnish][finish-1]));
+        var price_of1 = Math.round((+$('table tr').eq(row_index+1).find('td').eq(fields['price_of_one_item']).html())*discount/100);
+        $('table tr').eq(row_index+1).find('td').eq(fields['discount']).html(price_of1);
+        $('table tr').eq(row_index+1).find('td').eq(fields['total_price']).html(price_of1*amount);
+
+        if (my_object[furnish].category[category-1]*100-100 > 1){
+          $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.add_category').html((my_object[furnish].category[category-1]*100-100).toFixed(0) + '%');
+        }else{
+          $('table tr').eq(row_index+1).find('td').eq(fields['category']).find('.add_category').html('');
+        }
+
+        if (my_object.Wood[furnish][finish-1]*100-100 > 1){
+          $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.add_wood').html((my_object.Wood[furnish][finish-1]*100-100).toFixed(0) + '%');
+        }else{
+          $('table tr').eq(row_index+1).find('td').eq(fields['finishes']).find('.add_wood').html('');
+        }
+    }else{ //СТОЛЯРКА
+        $('table tr').eq(row_index+1).find('td').eq(fields['price_start']).html(cost);
+        $('table tr').eq(row_index+1).find('td').eq(fields['price_of_one_item']).html(Math.round(cost*index));
+        $('table tr').eq(row_index+1).find('td').eq(fields['delivery']).html((hard[row_index-fluffy.length].volume()*delivery*amount).toFixed(0));
+        var price_of1 = Math.round((+$('table tr').eq(row_index+1).find('td').eq(fields['price_of_one_item']).html())*discount/100);
+        $('table tr').eq(row_index+1).find('td').eq(fields['discount']).html(price_of1);
+        $('table tr').eq(row_index+1).find('td').eq(fields['total_price']).html(price_of1*amount);
+    }
+
+  }
+}
+
+
+//СКРЫТИЕ ПУНКТОВ МЕНЮ МЯГКОЙ МЕБЕЛИ при нажатии на иконку дивана!!!
+$(document).on('click','span[id=sofa_icon]',function(){
+
+  for ( var i = 0; i < buttons.length; i++){
+    if (buttons[i]['item'] == 1){
+      $('#'+buttons[i]['id']).toggle();
+    }
+  }
+
+});
+
+//СКРЫТИЕ ПУНКТОВ МЕНЮ СТОЛЯРКИ при нажатии на иконку тумба!!!
+$(document).on('click','span[id=table_icon]',function(){
+
+  for ( var i = 0; i < buttons.length; i++){
+    if (buttons[i]['item'] == 2){
+      $('#'+buttons[i]['id']).toggle();
+    }
+  }
+
+});
+
+
+//ВЫБОР ПУНКТА МЕНЮ с вызовом функции изменения цвета!!!
+$(document).on('click','aside input[type=button]',function(){
+  var my_id = $(this).prop('id');
+
+  for (var i = 0; i < buttons.length; i++){
+    if (buttons[i]['id'] == my_id){
+        var start = buttons[i].start();
+        var end = buttons[i].end();
+
+        if ($('table tr').eq(start+1).css('display') == 'table-row'){
+            for ( var j = start +1; j < end +2; j++){
+                $('table tr').eq(j).hide();
+            }
+        }else if ($('table tr').eq(start+1).css('display') == 'none'){
+            for ( var j = start +1; j < end +2; j++){
+                if (j < fluffy.length){
+                    if (fluffy[j-1]['hide']){
+                        $('table tr').eq(j).show();
+                        j = j + fluffy[j-1]['hide'];
+                    }else{
+                        $('table tr').eq(j).show();
+                    }
+                }else {
+                    $('table tr').eq(j).show();
+                }
+
+
+            }
+        }
+
+
+    }
+}
+
+  change_color(my_id, start);
+
+});
+
+
+
+//ИЗМЕНЕНИЕ ЦВЕТА МЕНЮ!!!
+//Функция, меняющая цвет кнопки при скрытии/появлении элементов списка
+function change_color(a,b){
+  var my_id = a;
+  var start = b;
+  if ($('table tr').eq(start +1).css('display') == 'none'){
+      $('#'+my_id).css('background-color', '#eee');
+  }else{
+      $('#'+my_id).css('background-color', '#ccffff');
+    }
+}
+
+
+//ФИЛЬТР!!!
+//Фильтрация всех выбранных элементов +подсчет общей стоимости
+$(document).on('click','#filter',function(){
+    items_price = 0;
+    delivery_price = 0;
+
+  var array=[];
+  var j = 0;
+
+  for (var i = 1; i<= all_rows; i++){
+    var check = $('table tr').eq(i).find('td').eq(fields['check']).find('.checkbox').prop('checked');
+
+    if (check == true){
+      array[j] = i;
+      j++;
+      $('table tr').eq(i).css('display', 'table-row');
+    }else{
+      $('table tr').eq(i).css('display', 'none');
+    }
+  }
+
+  for (var i = 0; i < array.length; i++){
+    var price = +$('table tr').eq(array[i]).find('td').eq(fields['total_price']).html();
+    items_price = items_price + price;
+    var delivery = +$('table tr').eq(array[i]).find('td').eq(fields['delivery']).html();
+    delivery_price = delivery_price + delivery;
+  }
+  // total_total = total_total + delivery_price + items_price;
+
+  $('#items_price').find('span').html(items_price + ' &#8364;');
+  $('#delivery_price').find('span').html(delivery_price + ' &#8364;');
+  $('#total_price').find('span').html(delivery_price+items_price + ' &#8364;');
+});
+
+
+//ПОКАЗАТЬ ВСЕ!!!
+$(document).on('click','div[id=show_all] input',function(){
+  for (var i = 0; i < all_rows; i++){
+    $('table tr').eq(i).css('display', 'table-row');
+  }
+
+  $( "aside" ).find( "input.menu" ).css( "background-color", "#ccffff" );
+});
+
+
+//СБРОСИТЬ ФЛАЖКИ!!!
+$(document).on('click','div[id=reset] input',function(){
+    for (var i = 0; i < all_rows; i++){
+        $('table tr').eq(i).find('td').eq(fields['check']).find('.checkbox').prop( "checked", false );
+        $('table tr').eq(i).css('background-color', '#fff');
+        if (i > 0){
+            $('table tr').eq(i).css('display','none');
+            reset(i-1);
+        }
+    }
+    $('#items_price').find('span').html('');
+    $('#delivery_price').find('span').html('');
+    $('#total_price').find('span').html('');
+    $( "aside" ).find( "input.menu" ).css( "background-color", "#eee" );
+});
+
+function reset(a){
+    var i = a;
+
+    $('table tr').eq(i+1).find('td').eq(fields['upholstery']).find('div select').val('Fabric');
+    $('table tr').eq(i+1).find('td').eq(fields['category']).find('div select').val('1');
+    $('table tr').eq(i+1).find('td').eq(fields['category']).find('div .add_category').html('');
+    //При отсутствии флажка сформировать список материалов для ткани первой категории
+    var material_html = '<div><select class="material">';
+    for (var j = 0; j < my_object['Fabric']['1'].length; j++){
+        material_html = material_html + '<option value="name ' + j + 1 + '">' + my_object['Fabric']['1'][j] + '</option>';
+    }
+    material_html = material_html + '</select></div>';
+    $('table tr').eq(i+1).find('td').eq(fields['name_of_material']).html(material_html);
+
+    $('table tr').eq(i+1).find('td').eq(fields['finishes']).find('div select').val('1');
+    $('table tr').eq(i+1).find('.get_wood img').attr("src", my_object['Wood']['Wood_images'][0]);
+    $('table tr').eq(i+1).find('td').eq(fields['finishes']).find('div .add_wood').html('');
+    $('table tr').eq(i+1).find('td').eq(fields['price_start']).html(''); //цена за единицу без наценки
+    $('table tr').eq(i+1).find('td').eq(fields['price_of_one_item']).html(''); //цена за единицу с наценкой
+    $('table tr').eq(i+1).find('td').eq(fields['discount']).html('');
+    $('table tr').eq(i+1).find('td').eq(fields['amount']).find('input').val('1');
+    $('table tr').eq(i+1).find('td').eq(fields['total_price']).html(''); //общая цена
+    $('table tr').eq(i+1).find('td').eq(fields['delivery']).html('');
+}
+
+//СОХРАНИТЬ КОМНАТУ!!!
+$(document).on('click','div[id=save] input',function(){
+
+    result = result + '<tr>' + room_header_name + $('#room_name input').val().toUpperCase() + '</th></tr>' + room_header_before_discount + '-' + (100 - discount + '%') + room_header_after_discount;
+
+    var row_high_style = '<tr style="height: 300px; text-align: center; vertical-align: middle;">';
+    var row_normal_hight = '<tr style="height: 160px; text-align: center; vertical-align: middle;">';
+    var row_fluffy12_style = '<td style="border: 1px solid black; width: 280px; font-size: 16px;">';
+    var row_fluffy_else_style = '<td style="border: 1px solid black; width: 100px; font-size: 16px;">';
+
+for (var j = 1 ; j < all_rows; j++){
+    if ($('table tr').eq(j).css('display') == 'none'){
+      continue;
+    }else if(j > fluffy.length){ //ЕСЛИ СТОЛЯРКА
+        if (hard[j - fluffy.length - 1]['item'] == 'showcases'){ //ЕСЛИ ВИТРИНЫ, то высота строки 300px
+            var row = row_high_style;
+            for (i = 0; i < fields_length; i++){
+                if (i == fields['photo'] || i == fields['name']){
+                  row = row + row_fluffy12_style + $('table tr').eq(j).find('td').eq(i).html() + '</td>';
+                }else if (i == fields['check'] || i == fields['price_start'] || i > fields['delivery']){
+                  continue;
+                }else if (i == fields['amount']){
+                  row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(fields['amount']).find('.get_amount').val() + '</td>';
+                }else if(i == fields['upholstery'] || i == fields['category'] || i == fields['name_of_material']){
+                    row = row + row_fluffy_else_style + ' ' + '</td>';
+                }else if(i == fields['finishes']){
+                    row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(fields['finishes']).find('div select option:selected').text() + '</td>';
+                }else {
+                  row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(i).html() + '</td>';
+                }
+            }
+        }else{ //ВСЕ, КРОМЕ ВИТРИН, высота строки 160px
+            var row = row_normal_hight;
+            for (i = 0; i < fields_length; i++){
+                if (i == fields['photo'] || i == fields['name']){
+                  row = row + row_fluffy12_style + $('table tr').eq(j).find('td').eq(i).html() + '</td>';
+                }else if (i == fields['check'] || i == fields['price_start'] || i > fields['delivery']){
+                  continue;
+                }else if (i == fields['amount']){
+                  row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(fields['amount']).find('.get_amount').val() + '</td>';
+                }else if(i == fields['upholstery'] || i == fields['category'] || i == fields['name_of_material']){
+                    row = row + row_fluffy_else_style + ' ' + '</td>';
+                }else if(i == fields['finishes']){
+                    row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(fields['finishes']).find('div select option:selected').text() + '</td>';
+                }else {
+                  row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(i).html() + '</td>';
+                }
+            }
+        }
+    }else{ //МЯГКАЯ МЕБЕЛЬ
+      var row = row_normal_hight;
+      for (i = 0; i < fields_length; i++){
+        if (i == fields['photo'] || i == fields['name']){
+          row = row + row_fluffy12_style + $('table tr').eq(j).find('td').eq(i).html() + '</td>';
+        }else if (i == fields['check'] || i == fields['price_start'] || i > fields['delivery']){
+          continue;
+        }else if (i >= fields['upholstery'] && i < fields['finishes']){
+          row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(i).find('div option:selected').prop('value') + '</td>';
+        } else if (i == fields['amount']){
+          row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(fields['amount']).find('.get_amount').val() + '</td>';
+        }else if(i == fields['finishes']){
+          row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(fields['finishes']).find('div select option:selected').text() + '</td>';
+        }else {
+          row = row + row_fluffy_else_style + $('table tr').eq(j).find('td').eq(i).html() + '</td>';
+        }
+      }
+    }
+    row = row + '</tr>';
+    result = result + row;
+  }
+
+  result = result + room_footer_style1 + items_price + '</th></tr>';
+  result = result + room_footer_style2 + delivery_price + '</th></tr>';
+  var total = items_price + delivery_price;
+  result = result + room_footer_style3 + total + '</th></tr><tr><td></td></tr><tr><td></td></tr>';
+
+  total_total = total_total + total;
+
+  $('#rooms_count').css('display', 'block');
+  room_counter++;
+  $('#rooms_count').html(room_counter);
+
+});
+
+
+
+function fnExcelReport(){
+  var tab_text="<table>";
+  var textRange; var j, i;
+  var cells = document.getElementById('testTable').rows[0].cells.length;
+
+  tab = document.getElementById('testTable'); // id of table
+
+  result = result + room_footer_style4 + total_total + '</th></tr>';
+  result = result + '</table>';
+
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){
+    txtArea1.document.open("txt/html","replace");
+    txtArea1.document.write(result);
+    txtArea1.document.close();
+    txtArea1.focus();
+    sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+  }else{
+    sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(result));
+    return (sa);
+  }
+}
+
+
+
+

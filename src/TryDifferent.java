@@ -1,6 +1,4 @@
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -18,6 +16,7 @@ public class TryDifferent {
         Sheet sheet = workbook.createSheet("Java to Excel");
         sheet.setColumnWidth(0, 10000);
 
+
         //add picture data to this workbook.
         InputStream is = new FileInputStream("Image1.jpeg");
         byte[] bytes = IOUtils.toByteArray(is);
@@ -33,7 +32,7 @@ public class TryDifferent {
         ClientAnchor anchor = helper.createClientAnchor();
         //set top-left corner of the picture,
         //subsequent call of Picture#resize() will operate relative to it
-        anchor.setCol1(1);
+        anchor.setCol1(0);
         anchor.setRow1(0);
         Picture picture = drawing.createPicture(anchor, pictureIndex);
 
@@ -45,8 +44,8 @@ public class TryDifferent {
 //        sheet.addMergedRegion(new CellRangeAddress(0, 4, 0, 3));
 
         Row row = sheet.createRow(0);
-        Cell cell = row.createCell(0);
-        cell.getRow().setHeightInPoints(30);
+        Cell cell = row.createCell(1);
+        cell.getRow().setHeightInPoints(150);
 
         cell.setCellValue("Some text");
         Font font = getFont(workbook);

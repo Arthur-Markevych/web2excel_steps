@@ -1,0 +1,315 @@
+body{
+	font-family: "GothamProBold";
+	font-size: 16px;
+	text-align: center;
+}
+header {
+    border-bottom: 3px solid #000;
+    height: 130px;
+    margin-bottom: 10px;
+    width: calc(100% - 160px);
+    margin-left: 160px;
+}
+.logo {
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+    width: 180px;
+    margin-top: 20px;
+}
+.logo img {
+    width: 100%;
+}
+.logo span {
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 2px;
+    width: 100%;
+}
+.address {
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+    font-size: 12px;
+    vertical-align: top;
+    margin-top: 65px;
+}
+.address p {
+    margin: 0;
+}
+#rooms_count{
+	display: none;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border: 3px dashed black;
+	background-color: #ccffff;
+	z-index: 1;
+	font-size: 42px;
+    text-align: center;
+    padding-top: 14px;
+}
+h3{
+	font-family: "GothamProBold";
+	font-size: 22px;
+}
+.price h3{
+	float: left;
+	margin-bottom: 0;
+}
+.price span{
+	display: inline-block;
+	margin-top: 20px;
+	float: right;
+	font-size: 22px;
+}
+aside {
+    position: fixed;
+    overflow-y: auto;
+    min-width: 150px;
+    background-color: #fff;
+    z-index: 2;
+    display: inline-block;
+    height: 100%;
+    top: 0;
+    left: 0;
+    max-width: 165px;
+    padding: 10px 10px;
+}
+aside p{
+	margin: 0;
+}
+aside::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+}
+aside::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #000;
+}
+aside::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+}
+.tabl{
+	margin-left: 160px;
+}
+tr.name th{
+	background-color: #eee;
+	text-align: center;
+}
+th.price{
+	font-size: 16px;
+}
+.name{
+	font-size: 16px;
+	font-family: "GothamProBold";
+	text-align: left;
+	text-transform: uppercase;
+}
+.name span{
+	text-transform: none;
+	font-size: 14px;
+	margin: 0;
+	display: inline;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	vertical-align: middle;
+	border-top: 1px solid #000;
+}
+thead tr{
+	text-transform: uppercase;
+}
+td.name{
+	min-width: 200px;
+}
+.table>tbody>tr>td.check{
+	width: 30px;
+    text-align: center;
+    height: 120px;
+}
+input[type=checkbox] {
+    margin: 0 auto;
+    height: 20px;
+    width: 20px;
+}
+.plus{
+	margin-top: 20px;
+    cursor: pointer;
+}
+.my_icon{
+	cursor: pointer;
+}
+.category div, .get_wood div, .get_furnish div{
+	position: relative;
+	display: inline-block;
+}
+.category .after, .get_wood .after, .get_furnish .after{
+	position: absolute;
+	top: 7px;
+    right: 2px;
+    height: 20px;
+    width: 13px;
+	display: none;
+}
+.category select, .amount input, .price, .price_plus,
+.discount, .delivery{
+	font-size: 18px;
+	outline: none;
+}
+.furnish, .wood, .get_category, .total, .material{
+	font-size: 18px;
+    padding: 5px;
+	outline: none;
+}
+/*.wood option[value="1"], .wood option[value="2"], .wood option[value="3"]{
+    background-color: #eee;
+}*/
+.unvisible{
+	background-color: #eee;
+	font-size: 18px;
+}
+
+input[type='button'], input[type='text']{
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: 12px;
+	height: 30px;
+	background-color: #eee;
+	outline: none;
+}
+input[type='text']{
+	width: 100%;
+	font-size: 16px;
+	height: 30px;
+	background-color: #fff;
+}
+
+.add_category, .add_wood{
+	position: absolute;
+	left: 0;
+	width: 100%;
+	color: #e60000;
+	bottom: -25px;
+	margin: 0;
+}
+
+.service_buttons{
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+.table>thead>tr>th {
+    border-bottom: 1px solid #000;
+}
+input[type='submit']{
+	width: 100%;
+	background-color: #bbb;
+	outline: none;
+}
+#total{
+	position: relative;
+}
+#total span{
+	font-size: 28px;
+    margin-left: 110px;
+    position: absolute;
+    top: 15px;
+}
+aside span{
+	display: block;
+}
+.popup{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+@media print {
+	.check, #coef, .col-md-1 input[type='button'], .unvisible, #filter, .price, .add_category, .add_wood,
+	.show_all, #room_name p, .index, .get_material, #delivery, .delivery_index, .my_icon, .my_icon img, #txtArea1, #btnExport{
+		display: none;
+	}
+	#room_name{
+		margin: 0;
+	}
+	#room_name input{
+		font-size: 22px;
+		border: none;
+	}
+	.amount input {
+	    text-align: center;
+	    margin-left: 15px;
+	}
+	.category select, .amount input, .get_wood select, .furnish{
+		border: none;
+	}
+	#total{
+		width: 30%;
+		margin-left: 60%;
+		margin-top: -40px;
+	}
+	#total span{
+	    margin-right: 5px;
+	    text-align: right;
+	    top: -7px;
+	}
+	aside{
+		position: relative;
+		height: 50px;
+	}
+	.tabl{
+		margin-left: 0;
+	}
+	.category .after, .get_wood .after, .get_furnish .after{
+		display: block!important;
+		background-color: #fff!important;
+	}
+	.table img {
+    	width: 120px;
+    }
+    header{
+		margin: 0;
+		width: 100%;
+	}
+}
+
+
+/*.show{
+    z-index: 999;
+    display: none;
+}
+.show .overlay{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.66);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.show .img-show{
+    width: 600px;
+    height: 400px;
+    background: #FFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden
+}
+.img-show span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 99;
+    cursor: pointer;
+}
+.img-show img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}*/

@@ -90,7 +90,8 @@ public class Main /*extends HttpServlet*/{
                     Node img = elementRow.selectFirst("img");
                         if (img != null) {
                             String imgPath = img.attr("src");
-                            saveToFile(imgPath, getImgName(imgPath) );
+                            if (imgPath.endsWith(".jpg") || imgPath.endsWith(".png"))
+                                saveToFile(imgPath, OUT_PATH + getImgName(imgPath) );
 //                        System.out.println("img > " + img.attr("src"));
                         }
                     }
