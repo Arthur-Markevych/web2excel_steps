@@ -14,10 +14,14 @@ import java.util.Date;
 
 public class ExcelGen {
 
+    private final static int NAME_COL_ROW_NUM = 5;
 
-    private static String path = "C:\\Users\\Diveloper\\Documents\\excelPOIwriteTest\\";
+//    private static String path = "C:\\Users\\Diveloper\\Documents\\excelPOIwriteTest\\";
+    private static String path = "C:\\Users\\Artur_Markevych\\Documents\\excel_test\\";
 
     private static String sheetName = "test sheet";
+
+    private static String imgPath = "C:\\Users\\Artur_Markevych\\Documents\\Pre_Prod_java_q3q4_2018\\task1 – git pracrice I\\images2\\006.jpg";
 
     public static void write() throws IOException {
         XSSFWorkbook wb = new XSSFWorkbook();
@@ -26,7 +30,7 @@ public class ExcelGen {
         //Set columns sizes
         int colNum = 0;
         sheet.setColumnWidth(colNum++, 40 * 256); // Photo column
-        sheet.setColumnWidth(colNum++, 20 * 256); // Name column
+        sheet.setColumnWidth(colNum++, 25 * 256); // Name column
         sheet.setColumnWidth(colNum++, 20 * 256); // Options column
         sheet.setColumnWidth(colNum++, 15 * 256); // Amount column
         sheet.setColumnWidth(colNum++, 17 * 256); // Total Price column
@@ -55,7 +59,6 @@ public class ExcelGen {
 
         //Font style
         Font font = wb.createFont();
-//        font.setColor(IndexedColors.BLACK.getIndex());
         font.setBold(true);
         font.setFontHeightInPoints((short) 14);
         style1.setFont(font);
@@ -88,32 +91,86 @@ public class ExcelGen {
         productCellStyle.setAlignment(HorizontalAlignment.CENTER);
         productCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
+        XSSFCellStyle leftRightBsAlCenter = wb.createCellStyle(); // Name cell style
+        leftRightBsAlCenter.cloneStyleFrom(productCellStyle);
+        leftRightBsAlCenter.setBorderLeft(BorderStyle.MEDIUM);
+        leftRightBsAlCenter.setBorderRight(BorderStyle.MEDIUM);
+
+        // merged cell style
+        XSSFCellStyle bigCellStyle = wb.createCellStyle();
+        bigCellStyle.cloneStyleFrom(leftRightBsAlCenter);
+        bigCellStyle.setBorderTop(BorderStyle.MEDIUM);
+        bigCellStyle.setBorderBottom(BorderStyle.MEDIUM);
+
+        // first name cell style
+        XSSFCellStyle topBorderStyle = wb.createCellStyle();
+        topBorderStyle.cloneStyleFrom(leftRightBsAlCenter);
+        topBorderStyle.setBorderTop(BorderStyle.MEDIUM);
+
         // Product description row --- --- --- -- forEach() -- --- --- --- ---
-        int productRowNum = rowCount++;
-        int productRowNumEnd = productRowNum + 4;
-        XSSFRow productRow = sheet.createRow(productRowNum);
-        XSSFRow pOneRow = sheet.createRow(rowCount++);
-        XSSFRow pTwoRow = sheet.createRow(rowCount++);
-        XSSFRow pThreeRow = sheet.createRow(rowCount++);
-        XSSFRow pFourRow = sheet.createRow(rowCount++);
-        setProductRowsStyle(productCellStyle, 21f, productRow, pOneRow, pTwoRow, pThreeRow, pFourRow);
+        // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ---- ----
+        for (TestModel m : TestModel.getAll()) {
+            int productRowNum = rowCount++;
+            int productRowNumEnd = productRowNum + 4;
+            XSSFRow productRow = sheet.createRow(productRowNum);
+            XSSFRow pTwoRow = sheet.createRow(rowCount++);
+            XSSFRow pThreeRow = sheet.createRow(rowCount++);
+            XSSFRow pFourRow = sheet.createRow(rowCount++);
+            XSSFRow pFiveRow = sheet.createRow(rowCount++);
+            setProductRowsStyle(productCellStyle, 24f, productRow, pTwoRow, pThreeRow, pFourRow, pFiveRow);
 
-        // --add image
-        addImage(wb, sheet, "C:\\Users\\Diveloper\\IdeaProjects\\web2excel\\test_files\\1.png");
-        // --/add image
+            // --add image
+            addImage(wb, sheet, productRow, m.getImgPath());
+            // --/add image
 
-        CellRangeAddress imgMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 0,0);
+            CellRangeAddress imgMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 0, 0);
 //        sheet.addMergedRegion(imgMerge);
-        int productCell = 0;
-        XSSFCell imgCell = productRow.createCell(productCell++);
+            // Name cells
+            int productCell = 0;
+            XSSFCell imgCell = productRow.createCell(productCell++);
+            XSSFCell nameCell = productRow.createCell(productCell);
+            XSSFCell heightCell = pTwoRow.createCell(productCell);
+            XSSFCell widthCell = pThreeRow.createCell(productCell);
+            XSSFCell depthCell = pFourRow.createCell(productCell);
+            XSSFCell volumeCell = pFiveRow.createCell(productCell++);
+
+            nameCell.setCellStyle(topBorderStyle);
+            heightCell.setCellStyle(leftRightBsAlCenter);
+            widthCell.setCellStyle(leftRightBsAlCenter);
+            depthCell.setCellStyle(leftRightBsAlCenter);
+            volumeCell.setCellStyle(leftRightBsAlCenter);
+
+            nameCell.setCellValue(m.getName().toUpperCase());
+            heightCell.setCellValue("height: " + m.getHeight());
+            widthCell.setCellValue("width: " + m.getWidth());
+            depthCell.setCellValue("depth: " + m.getDepth());
+            volumeCell.setCellValue("volume: " + m.getVolume());
 
 
-        // Cells merges
-        CellRangeAddress optionsMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 2,2);
-        CellRangeAddress amountMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 3,3);
-        CellRangeAddress totalPriceMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 4,4);
-        CellRangeAddress deliveryPriceMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 5,5);
-        addMergeRegions(sheet, imgMerge, optionsMerge, amountMerge, totalPriceMerge, deliveryPriceMerge);
+            XSSFCell optionsCell = productRow.createCell(productCell++);
+            optionsCell.setCellStyle(bigCellStyle);
+            optionsCell.setCellValue(m.getOptions());
+
+            XSSFCell amountCell = productRow.createCell(productCell++);
+            amountCell.setCellStyle(bigCellStyle);
+            amountCell.setCellValue(m.getAmount() + " psc.");
+
+            XSSFCell priceCell = productRow.createCell(productCell++);
+            priceCell.setCellStyle(bigCellStyle);
+            priceCell.setCellValue(m.getPrice() * m.getAmount());
+
+            XSSFCell deliveryCell = productRow.createCell(productCell++);
+            deliveryCell.setCellStyle(bigCellStyle);
+            deliveryCell.setCellValue("no defined");
+
+
+
+            // Cells merges
+            CellRangeAddress optionsMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 2, 2);
+            CellRangeAddress amountMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 3, 3);
+            CellRangeAddress totalPriceMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 4, 4);
+            CellRangeAddress deliveryPriceMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 5, 5);
+            addMergeRegions(sheet, imgMerge, optionsMerge, amountMerge, totalPriceMerge, deliveryPriceMerge);
 //        int pColnum = 2;
 //        setMerge(sheet, productRowNum, productRowNumEnd, pColnum, pColnum++, true);
 //        setMerge(sheet, productRowNum, productRowNumEnd, pColnum, pColnum++, true);
@@ -122,6 +179,7 @@ public class ExcelGen {
 
 
 //        rowCount += 4;
+        }
 
 
         // Summary rows ---------------------------------------------
@@ -166,7 +224,7 @@ public class ExcelGen {
         tplRightCell.setCellValue(0);
 
         // Write to file
-        try (FileOutputStream out = new FileOutputStream(path + "t1.xlsx")) {
+        try (FileOutputStream out = new FileOutputStream(path + "test.xlsx")) {
             wb.write(out);
             out.flush();
             wb.close();
@@ -174,7 +232,7 @@ public class ExcelGen {
 
     }
 
-    protected static void addImage(Workbook wb, Sheet sheet, String imgPath) throws IOException {
+    protected static void addImage(Workbook wb, Sheet sheet, XSSFRow row, String imgPath) throws IOException {
         try (InputStream inputStream = new FileInputStream(imgPath)) {
             byte[] bytes = IOUtils.toByteArray(inputStream);
             int picIndex = wb.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
@@ -187,28 +245,16 @@ public class ExcelGen {
             ClientAnchor anchor = helper.createClientAnchor();
 
             //create an anchor with upper left cell _and_ bottom right cell
-            anchor.setCol1(0); //Column B
-            anchor.setRow1(7); //Row 3
-            anchor.setCol2(1); //Column C
-            anchor.setRow2(11); //Row 4
+            anchor.setCol1(0); //Column A
+            anchor.setRow1(row.getRowNum()); //Row 3
+            anchor.setCol2(1); //Column B
+            anchor.setRow2(row.getRowNum() + NAME_COL_ROW_NUM); //Row 4
 
             //Creates a picture
             Picture pict = drawing.createPicture(anchor, picIndex);
 
             //Reset the image to the original size
-            //pict.resize(); //don't do that. Let the anchor resize the image!
-
-            //Create the Cell B3
-            Cell cell = sheet.createRow(2).createCell(1);
-
-            //set width to n character widths = count characters * 256
-            //int widthUnits = 20*256;
-            //sheet.setColumnWidth(1, widthUnits);
-
-            //set height to n points in twips = n * 20
-            //short heightUnits = 60*20;
-            //cell.getRow().setHeight(heightUnits);
-
+//            pict.resize(); //don't do that. Let the anchor resize the image!
         }
     }
 
@@ -241,9 +287,10 @@ public class ExcelGen {
     }
 
     protected static void addMergeRegions(Sheet sheet, CellRangeAddress... margeAddress) {
-        for (CellRangeAddress rangeAddress : margeAddress) {
-            sheet.addMergedRegion(rangeAddress);
-//            setBordersToMergedCells(sheet, rangeAddress); // todo fix problem with adding borders
+
+        for (int i = 0; i < margeAddress.length; i++) {
+            sheet.addMergedRegion(margeAddress[i]);
+            setBordersToMergedCells(sheet, margeAddress[i]);
         }
     }
 
