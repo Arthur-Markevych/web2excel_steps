@@ -1,13 +1,20 @@
 package main.webapp;
 
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.ImageUtils;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.util.Units;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.util.IOUtils;
 
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -120,8 +127,10 @@ public class ExcelGen {
             setProductRowsStyle(productCellStyle, 24f, productRow, pTwoRow, pThreeRow, pFourRow, pFiveRow);
 
             // --add image
-            addImage(wb, sheet, productRow, m.getImgPath());
+//            addImage(wb, sheet, productRow, m.getImgPath());
             // --/add image
+
+            addImageInCell(sheet, m.getImgPath(), sheet.createDrawingPatriarch(), 0, productRowNum);
 
             CellRangeAddress imgMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 0, 0);
 //        sheet.addMergedRegion(imgMerge);
@@ -171,14 +180,6 @@ public class ExcelGen {
             CellRangeAddress totalPriceMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 4, 4);
             CellRangeAddress deliveryPriceMerge = new CellRangeAddress(productRowNum, productRowNumEnd, 5, 5);
             addMergeRegions(sheet, imgMerge, optionsMerge, amountMerge, totalPriceMerge, deliveryPriceMerge);
-//        int pColnum = 2;
-//        setMerge(sheet, productRowNum, productRowNumEnd, pColnum, pColnum++, true);
-//        setMerge(sheet, productRowNum, productRowNumEnd, pColnum, pColnum++, true);
-//        setMerge(sheet, productRowNum, productRowNumEnd, pColnum, pColnum++, true);
-//        setMerge(sheet, productRowNum, productRowNumEnd, pColnum, pColnum++, true);
-
-
-//        rowCount += 4;
         }
 
 
@@ -234,6 +235,13 @@ public class ExcelGen {
 
     protected static void addImage(Workbook wb, Sheet sheet, XSSFRow row, String imgPath) throws IOException {
         try (InputStream inputStream = new FileInputStream(imgPath)) {
+
+        // ------------
+//            Image img = ImageIO.read(inputStream);
+//            BufferedImage tempJPG = resizeImage(img, 100, 100);
+        // ------------
+
+
             byte[] bytes = IOUtils.toByteArray(inputStream);
             int picIndex = wb.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
 
@@ -245,17 +253,45 @@ public class ExcelGen {
             ClientAnchor anchor = helper.createClientAnchor();
 
             //create an anchor with upper left cell _and_ bottom right cell
-            anchor.setCol1(0); //Column A
-            anchor.setRow1(row.getRowNum()); //Row 3
-            anchor.setCol2(1); //Column B
-            anchor.setRow2(row.getRowNum() + NAME_COL_ROW_NUM); //Row 4
+            anchor.setCol1(0);
+            anchor.setRow1(row.getRowNum());
+            anchor.setCol2(1);
+            anchor.setRow2(row.getRowNum() + NAME_COL_ROW_NUM);
+
+//            anchor.setDx1(0);
+//            anchor.setDy1(0);
+//            anchor.setDx1((int) (0.5 * sheet.getColumnWidthInPixels(0) * Units.EMU_PER_PIXEL));
+//            anchor.setDx2((int) (0.4 * ImageUtils.getRowHeightInPixels(sheet, row.getRowNum()) * Units.EMU_PER_PIXEL));
+
+            int colWidth = sheet.getColumnWidth(0);
+            int rowHeigth = row.getHeight();
+
 
             //Creates a picture
             Picture pict = drawing.createPicture(anchor, picIndex);
+//            pict.resize();
+//            pict.resize( 0.2);
+//            int picWidth = pict.getImageDimension().width;
+//            double resize = (double) colWidth / 10_000;
+//            pict.resize(resize, resize);
+            //set height to n points in twips = n * 20
+//            short heightUnits = (short) (picHeight * 20);
+//            row.setHeight(heightUnits);
 
             //Reset the image to the original size
 //            pict.resize(); //don't do that. Let the anchor resize the image!
         }
+    }
+    // temporary, to delete. Just try.
+    protected static void addImageInCell(Sheet sheet, String url, Drawing<?> drawing, int colNumber, int rowNumber) throws IOException {
+        InputStream inputStream = new FileInputStream(url);
+        BufferedImage imageIO = ImageIO.read(inputStream);
+        int height = imageIO.getHeight();
+        int width = imageIO.getWidth();
+        int relativeHeight = (int) (((double) height / width) * 28.5);
+        new AddDimensionedImage().addImageToSheet(colNumber, rowNumber, sheet, drawing, new URL(url), 30, relativeHeight,
+                AddDimensionedImage.EXPAND_ROW_AND_COLUMN);
+
     }
 
     protected static void setMerge(Sheet sheet, int numRow, int untilRow, int numCol, int untilCol, boolean border) {
@@ -303,4 +339,21 @@ public class ExcelGen {
         write();
         System.out.println("Done! " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
     }
+
+    /**
+     * This function resize the image file and returns the BufferedImage object that can be saved to file system.
+     */
+    public static BufferedImage resizeImage(final Image image, int width, int height) {
+        final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        final Graphics2D graphics2D = bufferedImage.createGraphics();
+        graphics2D.setComposite(AlphaComposite.Src);
+        //below three lines are for RenderingHints for better image quality at cost of higher processing time
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics2D.drawImage(image, 0, 0, width, height, null);
+        graphics2D.dispose();
+        return bufferedImage;
+    }
+
 }
